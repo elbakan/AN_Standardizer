@@ -7,16 +7,18 @@
 #include "patterns.h"
 #include "stand.h"
 
-/* gdriver.c	software driver for the name standardizer,
-		address standardizer.
-
-		This program reads a data file and outputs
-		each record with the standardized address,
-		name.
+/** @file gdriver.c
+  * @brief gdriver.c	software driver for the name standardizer, address standardizer.
+  *
+  * This program reads a data file and outputs
+  * each record with the standardized address and name.
+  *
+  * \author Edward Porter
+  * \bugs No Known bugs
 */
 
 
-/* in case the standard date & time macros aren't present */
+/** \brief in case the standard date & time macros aren't present */
 #ifndef __DATE__
 #define __DATE__ "?/?/?"
 #endif !__DATE__
@@ -24,12 +26,12 @@
 #define __TIME__ "?:?"
 #endif !__TIME__
 
-/* in case BUFFERSIZE was defined differently */
+/** \brief in case BUFFERSIZE was defined differently */
 #ifndef BUFFERSIZE
 #define BUFFERSIZE 100
 #endif !BUFFERSIZE
 
-/* in case the standard boolean macros aren't present */
+/** \brief in case the standard boolean macros aren't present */
 #ifndef TRUE
 #define TRUE 1
 #endif !TRUE
@@ -37,8 +39,7 @@
 #define FALSE 0
 #endif !FALSE
 
-/* Modify if new file requires a different starting location of the
-   address field */
+/** \brief identify if new file requires a different starting location of theaddress field */
 
 struct	standardized_address	*AddrRes;
 
@@ -106,7 +107,7 @@ fother = fopen("otheroutput.txt","w");
 
 k = 0;
 
-/* This system uses buffered i/o.  Buffered input and output means
+/** \brief This system uses buffered i/o.  Buffered input and output means
    that a number of records are read in before processing which
    takes place before the records are outputed */
 
@@ -125,16 +126,16 @@ if (!feof(fptri)) do {
     namefld[namelength+1] = 0;
     name_split();
     dict_match();
-
-  /*	passstan is the number of names in the name field (-1)
-	e.g. 'Joe & Sue Smith' would return 1.
-	a nonstandardized field would return -1	*/
+	  
+/** \brief passstan is the number of names in the name field (-1)
+  *         for example. 'Joe & Sue Smith' would return 1.
+  *        a nonstandardized field would return -1	*/
 
     if ((passstan = standn(ptrn2,standname)) >= 0) {
 
 	for(k = 0;k <= passstan;k++) {
 
-		/* address standardization */
+		/** \brief address standardization */
 
 	  if ((AddrRes = (struct standardized_address *)Addr_Stan2(teststring,' ','u',"  ","     ")) != NULL) {
 	    sprintf(outstring[iout],"%s%6.6s%5.5s%20.20s%10.10s%4.4s%5.5s%3.3s%5.5s%4.4s%5.5s%46.46s",fixedstring
@@ -218,8 +219,7 @@ for (j = 0;j < i;j++) {
 		,standname[k]);
 	  outstring[iout++][newlength] = 0;
 	  written++;
-	} else {	/*	maximum value in for loop must equal the sum
-				of all %s operators above */
+	} else {	/** \brief maximum value in for loop must equal the sum of all %s operators above */
 	sprintf(outstring[iout],"%s                                                                   %46.46s",fixedstring,standname[k]);
 	outstring[iout++][newlength] = 0;
 	written++;
@@ -240,8 +240,7 @@ for (j = 0;j < i;j++) {
 		,AddrRes->bxi
 		,standname[0]);
 	  sparestring[kout++][newlength] = 0;
-    } else {	/*	maximum value in for loop must equal the sum
-				of all %s operators above */
+    } else {	/** \brief maximum value in for loop must equal the sum of all %s operators above */
 	sprintf(sparestring[kout],"%s                                                                   %46.46s",fixedstring,standname[k]);
 	sparestring[kout++][newlength] = 0;
     }
